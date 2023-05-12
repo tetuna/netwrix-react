@@ -257,48 +257,49 @@ nav img {
   .container-search .type-country-state .react-select-input:last-child {
     margin-bottom: 0px;
   }
-}
-.container-result {
-  width: 100%;
-  padding: 55px 0px;
-  background-color: #f3f4fa;
-}
-.container-result .content {
-  max-width: 290px;
-  margin: auto;
-}
-.container-result .partner-card {
-  display: flex;
-  flex-direction: column;
-  padding: 43px 24px;
-}
-.container-result .partner-card .logo {
-  margin-bottom: 40px;
-}
-.container-result .partner-card .company-address {
-  width: 100%;
-}
-.container-result .partner-card h3 {
-  margin-bottom: 14px;
-}
-.container-result .partner-card .address {
-  margin-bottom: 30px;
-  padding-bottom: 28px;
-  font-size: 14px;
-  border-bottom: 1px solid #dcdee0;
-}
-.container-result .partner-card .website-phone {
-  border: none;
-}
-.container-result .partner-card a.website {
-  margin-bottom: 15px;
-}
-.container-result .partner-card .phone {
-  margin-bottom: 15px;
-}
-.container-result .partner-card .status {
-  margin-bottom: 0px;
-  padding-left: 0px;
+
+  .container-result {
+    width: 100%;
+    padding: 55px 0px;
+    background-color: #f3f4fa;
+  }
+  .container-result .content {
+    max-width: 290px;
+    margin: auto;
+  }
+  .container-result .partner-card {
+    display: flex;
+    flex-direction: column;
+    padding: 43px 24px;
+  }
+  .container-result .partner-card .logo {
+    margin-bottom: 40px;
+  }
+  .container-result .partner-card .company-address {
+    width: 100%;
+  }
+  .container-result .partner-card h3 {
+    margin-bottom: 14px;
+  }
+  .container-result .partner-card .address {
+    margin-bottom: 30px;
+    padding-bottom: 28px;
+    font-size: 14px;
+    border-bottom: 1px solid #dcdee0;
+  }
+  .container-result .partner-card .website-phone {
+    border: none;
+  }
+  .container-result .partner-card a.website {
+    margin-bottom: 15px;
+  }
+  .container-result .partner-card .phone {
+    margin-bottom: 15px;
+  }
+  .container-result .partner-card .status {
+    margin-bottom: 0px;
+    padding-left: 0px;
+  }
 }
 
 /*# sourceMappingURL=partner-locator.css.map */
