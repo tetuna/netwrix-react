@@ -1,23 +1,25 @@
 import React from 'react'
 import logo from 'assets/img/standard-logo-distributor.jpg'
 
-export default function PartnerCard() {
+export default function PartnerCard(props) {
+
+    const item = props?.item;
 
     return (
         <>
             <div className="partner-card">
                 <div className="logo">
-                    <img src={logo} alt="" />
+                    <img src={item?.logo} alt="" />
                 </div>
                 <div className="company-address">
-                    <h3 className="company">C Technology</h3>
-                    <div className="address">Sydney, Level 7, 171 Clarence Street</div>
+                    <h3 className="company">{item?.company}</h3>
+                    <div className="address">{item?.address}</div>
                 </div>
                 <div className="website-phone">
-                    <a href="#" className="website">Website</a>
-                    <div className="phone">+61 2 8001 0250</div>
+                    <a href={props?.item?.website} className="website">{item?.website.replace(/^https?\:\/\//i, "")}</a>
+                    <a href="tel:+995-598-457-468" className="phone">{item?.phone}</a>
                 </div>
-                <div className="status">Distributor</div>
+                <div className="status">{item?.status}</div>
             </div>
 
         </>

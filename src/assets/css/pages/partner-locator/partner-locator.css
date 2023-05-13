@@ -57,6 +57,9 @@ nav img {
   text-align: center;
   color: #ffffff;
 }
+.container-search form {
+  width: 100%;
+}
 .container-search .search-input {
   width: 100%;
   margin-bottom: 20px;
@@ -78,12 +81,6 @@ nav img {
 .container-search input.search-company::-webkit-input-placeholder {
   color: #7F8893;
 }
-.container-search input.search-company.large {
-  display: inline-block;
-}
-.container-search input.search-company.small {
-  display: none;
-}
 .container-search .search-icon-parent {
   position: relative;
   width: 100%;
@@ -98,6 +95,7 @@ nav img {
   width: 15px;
   height: 18px;
   cursor: pointer;
+  border: none;
   transition: 0.15s;
 }
 .container-search .search-icon:hover {
@@ -140,6 +138,12 @@ nav img {
   border-radius: 10px;
   background-color: #ffffff;
   box-shadow: 0px 1px 2px rgba(5, 27, 43, 0.14);
+  transition: 0.15s;
+  cursor: pointer;
+  animation: slidein 0.2s;
+}
+.container-result .partner-card:hover {
+  transform: scale(1.05);
 }
 .container-result .partner-card:last-child {
   margin-bottom: 0px;
@@ -147,36 +151,44 @@ nav img {
 .container-result .partner-card > div {
   flex-grow: 1;
 }
-.container-result .partner-card .logo {
+@keyframes slidein {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+.container-result .logo {
   flex: none;
   width: 95px;
   height: 76px;
   margin-right: 75px;
 }
-.container-result .partner-card .logo img {
+.container-result .logo img {
   height: 100%;
 }
-.container-result .partner-card .company-address {
+.container-result .company-address {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   flex: none;
   width: 470px;
 }
-.container-result .partner-card .company {
+.container-result .company {
   flex-grow: initial;
 }
-.container-result .partner-card h3 {
+.container-result h3 {
   font-size: 21px;
   color: #354556;
   flex-grow: 1;
 }
-.container-result .partner-card p {
+.container-result p {
   font-size: 14px;
   color: #354556;
   flex-grow: 1;
 }
-.container-result .partner-card .website-phone {
+.container-result .website-phone {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -184,26 +196,60 @@ nav img {
   width: 180px;
   border-right: 1px solid #dcdee0;
 }
-.container-result .partner-card a.website {
+.container-result a.website {
   font-size: 14px;
   color: #0068da;
   text-underline-offset: 3px;
   flex-grow: 1;
 }
-.container-result .partner-card .phone {
+.container-result a.phone {
   font-size: 13px;
   color: #354556;
   flex-grow: 1;
+  text-decoration: none;
 }
-.container-result .partner-card .status {
+.container-result .status {
   font-size: 13px;
   color: #354556;
   font-weight: 600;
   flex-grow: 1;
   width: 120px;
-  padding-left: 50px;
+  padding-left: 45px;
 }
 
+@media (max-width: 1150px) {
+  .container-result .content {
+    max-width: 755px;
+    margin: auto;
+  }
+  .container-result .partner-card {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 25px 30px;
+  }
+  .container-result .logo {
+    margin-right: 25px;
+    width: 75px;
+    height: 65px;
+  }
+  .container-result h3 {
+    font-size: 16px;
+  }
+  .container-result p {
+    font-size: 13px;
+  }
+  .container-result .company-address {
+    width: 310px;
+  }
+  .container-result .website-phone {
+    width: 150px;
+  }
+  .container-result .status {
+    padding-left: 35px;
+  }
+}
 @media (max-width: 767px) {
   nav {
     justify-content: center;
@@ -237,12 +283,6 @@ nav img {
   }
   .container-search .search-icon-parent {
     right: 13px;
-  }
-  .container-search input.search-company.small {
-    display: inline-block;
-  }
-  .container-search input.search-company.large {
-    display: none;
   }
   .container-search .type-country-state {
     padding: 0px;
@@ -293,7 +333,7 @@ nav img {
   .container-result .partner-card a.website {
     margin-bottom: 15px;
   }
-  .container-result .partner-card .phone {
+  .container-result .partner-card a.phone {
     margin-bottom: 15px;
   }
   .container-result .partner-card .status {

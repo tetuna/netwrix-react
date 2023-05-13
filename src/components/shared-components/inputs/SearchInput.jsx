@@ -1,21 +1,28 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import searchIcon from 'assets/img/search-icon.svg'
 
-export default function SearchInput() {
+export default forwardRef(function SearchInput(props, ref) {
 
     return (
         <>
             <div className="search-input">
-                <input type="text" className="search-company large" placeholder="Search by company name or adress..." />
-                <input type="text" className="search-company small" placeholder="Search" />
+                <input
+                    className="search-company large"
+                    type="text"
+                    ref={ref}
+                    placeholder={props?.placeholder}
+                />
                 <div className="search-icon-parent">
-                    <span className="search-icon">
+                    <button
+                        className="search-icon"
+                        type="submit"
+                    >
                         <img src={searchIcon} alt="" />
-                    </span>
+                    </button>
                 </div>
             </div>
 
         </>
     )
-}
+})
 
