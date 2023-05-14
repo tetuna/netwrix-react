@@ -6,11 +6,15 @@ import ReactSelectInput from "components/shared-components/inputs/ReactSelectInp
 import PartnerCard from "components/shared-components/specific/PartnerCard"
 import 'assets/css/pages/partner-locator/partner-locator.css'
 import background from 'assets/img/bg.webp'
-import searchIcon from 'assets/img/search-icon.svg'
+import loadingIcon from 'assets/img/loading.svg'
+import notFoundImage from 'assets/img/not-found.svg'
 
 export default function PartnerLocator() {
 
     const [searchResult, setSearchResult] = useState([]);
+    const [resultLoading, setResultLoading] = useState(true);
+    const [pageLoading, setPageLoading] = useState(true);
+    const [pageLoadingClosing, setPageLoadingClosing] = useState(false);
     const [countries, setCountries] = useState([]);
     const [states, setStates] = useState([]);
     const [selectedType, setSelectedType] = useState("");
@@ -27,30 +31,34 @@ export default function PartnerLocator() {
     ]
 
     useEffect(() => {
+        setResultLoading(true);
         axios.get('http://netwrix-laravel.test/api/partners').then(res => {
-            setSearchResult(res?.data?.data);
+            setSearchResult(res?.data?.partners);
             setCountries(res?.data?.countries.map(option => ({
                 id: option.country_id,
                 value: option.short_name,
                 label: option.name
             })));
+            setResultLoading(false);
         });
+        setPageLoadingClosing(true);
+        setTimeout(() => {
+            setPageLoading(false);
+        }, 600);
     }, []);
 
     useEffect(() => {
         filterData();
-    }, [selectedType, selectedState]);
+    }, [selectedType, selectedCountry, selectedState]);
 
     useEffect(() => {
-        filterData();
+        setSelectedState({ value: "", label: "State" });
         axios.get('http://netwrix-laravel.test/api/states/search-by-country', {
             params: {
                 country: selectedCountry?.id
             }
         }).then(res => {
-            // setStates(res?.data?.data);
-            setStates(res?.data?.data.map(option => ({
-                // id: option.country_id,
+            setStates(res?.data?.states.map(option => ({
                 value: option.short_name,
                 label: option.name
             })));
@@ -61,14 +69,9 @@ export default function PartnerLocator() {
         event.preventDefault();
         filterData();
     }
-    // const toReactSelectKey = (options) => {
-    //     const tempOptions = options.map(option => ({
-    //         value: option.id,
-    //         label: option.label
-    //     }));
-    // }
 
-    const filterData = (data) => {
+    const filterData = () => {
+        setResultLoading(true)
         axios.get('http://netwrix-laravel.test/api/partners/search', {
             params: {
                 search_company: searchInputRef.current.value,
@@ -77,12 +80,20 @@ export default function PartnerLocator() {
                 state: selectedState?.value
             }
         }).then(res => {
-            setSearchResult(res?.data?.data);
+            setSearchResult(res?.data?.partners);
+            setResultLoading(false);
         });
     }
 
     return (
         <>
+            {pageLoading ?
+                <div className={`page-loading${pageLoadingClosing ? " " + "closing" : ""}`}>
+                    <img src={loadingIcon} alt="" />
+                </div>
+                :
+                null
+            }
             <Header />
             <div className="container-search" style={{ background: `url(${background})` }}>
                 <div className="content">
@@ -100,11 +111,13 @@ export default function PartnerLocator() {
                         <ReactSelectInput
                             placeholder="Type"
                             options={types}
+                            selectedValue={selectedType}
                             setSelected={setSelectedType}
                         />
                         <ReactSelectInput
                             placeholder="Country"
                             options={countries}
+                            selectedValue={selectedCountry}
                             setSelected={setSelectedCountry}
                             stylesControl={
                                 window.innerWidth > 767 ?
@@ -118,6 +131,7 @@ export default function PartnerLocator() {
                         <ReactSelectInput
                             placeholder="State"
                             options={states}
+                            selectedValue={selectedState}
                             setSelected={setSelectedState}
                             disabled={states.length == 0}
                             stylesControl={
@@ -135,7 +149,23 @@ export default function PartnerLocator() {
             </div>
             <div className="container-result">
                 <div className="content">
-                    {searchResult.map((item, index) => <PartnerCard item={item} key={index} />)}
+                    {searchResult.length == 0 ?
+                        (resultLoading ? <div className="result-loading">
+                            <div className="loading-icon">
+                                <img src={loadingIcon} alt="" />
+                            </div>
+                        </div> :
+                            <div className="not-found">
+                                <div className="image">
+                                    <img src={notFoundImage} alt="" />
+                                </div>
+                                <h3>We couldn’t find any records that match your search parameters.</h3>
+                                <h3>Please try a different search.</h3>
+                            </div>
+                        )
+                        :
+                        searchResult.map((item, index) => <PartnerCard item={item} key={index} />)
+                    }
                 </div>
             </div>
         </>

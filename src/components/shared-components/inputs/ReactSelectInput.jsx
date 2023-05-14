@@ -1,8 +1,7 @@
 import React from 'react'
 import ReactSelect from "react-select"
-import dropdownIndicatorIcon from 'assets/img/dropdown-Indicator-icon.svg'
 
-export default function ReactSelectInput({ placeholder = "", stylesControl = {}, options = [], disabled = false, setSelected }) {
+export default function ReactSelectInput({ placeholder = "", stylesControl = {}, options = [], disabled = false, selectedValue = "", setSelected }) {
 
     const customStyles = {
         control: (baseStyles) => ({
@@ -28,12 +27,12 @@ export default function ReactSelectInput({ placeholder = "", stylesControl = {},
             ...baseStyles,
             color: "#ffffff",
         }),
-        option: (baseStyles) => ({
+        option: (baseStyles, state) => ({
             ...baseStyles,
             color: "#000000",
             backgroundColor: "$ffffff",
             "&:first-of-type": {
-                color: "#a0a0a0",
+                color: state.value.length > 0 ? "#000000" : "#a0a0a0"
             },
         }),
         dropdownIndicator: baseStyles => ({
@@ -84,6 +83,7 @@ export default function ReactSelectInput({ placeholder = "", stylesControl = {},
                     options={tempOptions}
                     onChange={(selectedOption) => setSelected(selectedOption)}
                     styles={customStyles}
+                    value={selectedValue}
                     placeholder={placeholder}
                     isDisabled={disabled}
                 />
