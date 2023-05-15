@@ -10,6 +10,7 @@ import loadingIcon from 'assets/img/loading.svg'
 import notFoundImage from 'assets/img/not-found.svg'
 
 export default function PartnerLocator() {
+    const baseUrl = import.meta.env.VITE_APP_API_URL;
 
     const [searchResult, setSearchResult] = useState([]);
     const [resultLoading, setResultLoading] = useState(true);
@@ -32,7 +33,7 @@ export default function PartnerLocator() {
 
     useEffect(() => {
         setResultLoading(true);
-        axios.get('http://netwrix-laravel.test/api/partners').then(res => {
+        axios.get(baseUrl + "partners").then(res => {
             setSearchResult(res?.data?.partners);
             setCountries(res?.data?.countries.map(option => ({
                 id: option.country_id,
@@ -53,7 +54,7 @@ export default function PartnerLocator() {
 
     useEffect(() => {
         setSelectedState({ value: "", label: "State" });
-        axios.get('http://netwrix-laravel.test/api/states/search-by-country', {
+        axios.get(baseUrl + "states/search-by-country", {
             params: {
                 country: selectedCountry?.id
             }
@@ -72,7 +73,7 @@ export default function PartnerLocator() {
 
     const filterData = () => {
         setResultLoading(true)
-        axios.get('http://netwrix-laravel.test/api/partners/search', {
+        axios.get(baseUrl + "partners/search", {
             params: {
                 search_company: searchInputRef.current.value,
                 type: selectedType?.value,
