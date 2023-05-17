@@ -11,6 +11,7 @@ import notFoundImage from 'assets/img/not-found.svg'
 
 export default function PartnerLocator() {
     const baseUrl = import.meta.env.VITE_APP_API_URL;
+    const isWide = window.innerWidth > 767;
 
     const [searchResult, setSearchResult] = useState([]);
     const [resultLoading, setResultLoading] = useState(true);
@@ -105,7 +106,7 @@ export default function PartnerLocator() {
                     <form onSubmit={handleSubmit}>
                         <SearchInput
                             ref={searchInputRef}
-                            placeholder={window.innerWidth > 767 ? "Search by company name or address..." : "Search"}
+                            placeholder={isWide ? "Search by company name or address..." : "Search"}
                         />
                     </form>
                     <div className="type-country-state">
@@ -121,7 +122,7 @@ export default function PartnerLocator() {
                             selectedValue={selectedCountry}
                             setSelected={setSelectedCountry}
                             stylesControl={
-                                window.innerWidth > 767 ?
+                                isWide ?
                                     {
                                         borderTopRightRadius: "0px",
                                         borderBottomRightRadius: "0px",
@@ -136,7 +137,7 @@ export default function PartnerLocator() {
                             setSelected={setSelectedState}
                             disabled={states.length == 0}
                             stylesControl={
-                                window.innerWidth > 767 ?
+                                isWide ?
                                     {
                                         borderLeft: "none",
                                         borderTopLeftRadius: "0px",
